@@ -11,6 +11,8 @@ const BlogPost = () => {
   const [selectedAuthor, setSelectedAuthor] = useState(null);
   const [authorData, setAuthorData] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetchCategoryData();
     fetchAuthorData();
@@ -39,6 +41,7 @@ const BlogPost = () => {
 
   const fetchBlogPosts = async () => {
     try {
+      setIsLoading(true);
       let url = `http://localhost:5000/api/v1/blogPosts`;
 
       if (selectedAuthor && selectedCategory) {
@@ -53,6 +56,7 @@ const BlogPost = () => {
 
       const response = await axios?.get(url);
       setBlogPosts(response?.data?.data?.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching blog posts:", error);
     }
@@ -106,7 +110,7 @@ const BlogPost = () => {
         </button>
       </div>
       <div className="mt-8">
-        <DynamicBlogs blogPosts={blogPosts} />
+        <DynamicBlogs blogPosts={blogPosts} isLoading={isLoading} />
       </div>
     </div>
   );
