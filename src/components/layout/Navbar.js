@@ -1,4 +1,42 @@
-const Navbar = () => {
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const Navbar = ({ authors }) => {
+  const [categoryData, setCategoryData] = useState([]);
+  const [authorData, setAuthorData] = useState([]);
+
+  // useEffect(() => {
+  //   fetchCategoryData();
+  //   fetchAuthorData();
+  // }, []);
+
+  const fetchCategoryData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/categories");
+
+      const data = await response.json();
+      setCategoryData(data?.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  const fetchAuthorData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/users");
+
+      const data = await response.json();
+      setAuthorData(data?.data);
+    } catch (error) {
+      console.error("Error fetching authors:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryData();
+    fetchAuthorData();
+  }, []);
+
   return (
     <div className="navbar bg-black text-white font-semibold container mx-auto">
       <div className="navbar-start">
@@ -27,12 +65,11 @@ const Navbar = () => {
               <details>
                 <summary>Category</summary>
                 <ul className="p-2 text-black">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
+                  {categoryData?.map((cat) => (
+                    <li key={cat?.id}>
+                      <Link href={`/category/${cat?.id}`}>{cat?.name}</Link>
+                    </li>
+                  ))}
                 </ul>
               </details>
             </li>
@@ -40,44 +77,43 @@ const Navbar = () => {
               <details>
                 <summary>Author</summary>
                 <ul className="p-2 text-black">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
+                  {authorData?.map((author) => (
+                    <li key={author?.id}>
+                      <Link href={`/author/${author?.id}`}>{author?.name}</Link>
+                    </li>
+                  ))}
                 </ul>
               </details>
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">Blog Post</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 z-10">
+        <ul className="menu menu-horizontal px-1 z-10 lg:space-x-4">
           <li className="mx-3">
             <details>
               <summary>Category</summary>
-              <ul className="p-2 text-black">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
+              <ul className="p-2 text-black lg:w-32">
+                {categoryData?.map((cat) => (
+                  <li key={cat?.id}>
+                    <Link href={`/category/${cat?.id}`}>{cat?.name}</Link>
+                  </li>
+                ))}
               </ul>
             </details>
           </li>
           <li>
             <details>
               <summary>Author</summary>
-              <ul className="p-2 text-black">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
+              <ul className="p-2 text-black lg:w-32">
+                {authorData?.map((author) => (
+                  <li key={author?.id}>
+                    <Link className="text-black" href={`/author/${author?.id}`}>
+                      {author?.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </details>
           </li>

@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 const BlogPost = () => {
   const [blogPosts, setBlogPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedAuthor, setSelectedAuthor] = useState(null);
+  const [selectedAuthor, setSelectedAuthor] = useState("");
   const [authorData, setAuthorData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
