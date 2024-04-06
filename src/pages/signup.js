@@ -52,7 +52,7 @@ const SignUpPage = () => {
   const sentToDb = async (name, email) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/users/create-user",
+        "https://blog-post-backend.vercel.app/api/v1/users/create-user",
         {
           name: name,
           email: email,

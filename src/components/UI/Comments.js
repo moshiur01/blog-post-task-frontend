@@ -23,7 +23,7 @@ const Comments = ({ comments, postId }) => {
     try {
       if (user?.email) {
         const res = await axios.get(
-          `http://localhost:5000/api/v1/users/${user?.email}`
+          `https://blog-post-backend.vercel.app/api/v1/users/${user?.email}`
         );
 
         setUserId(res?.data?.data?.id);
@@ -54,7 +54,7 @@ const Comments = ({ comments, postId }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/postComments/create-blogPost-comment",
+        "https://blog-post-backend.vercel.app/api/v1/postComments/create-blogPost-comment",
         finalData
       );
       if (response.data.success) {
@@ -72,7 +72,7 @@ const Comments = ({ comments, postId }) => {
   const handleCommentDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/v1/postComments/${id}`
+        `https://blog-post-backend.vercel.app/api/v1/postComments/${id}`
       );
 
       //   console.log(res);

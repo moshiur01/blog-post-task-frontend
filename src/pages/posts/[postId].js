@@ -82,7 +82,7 @@ export const getServerSideProps = async (context) => {
   const { params } = context;
 
   const res = await axios.get(
-    `http://localhost:5000/api/v1/blogPosts/${params.postId}`
+    `https://blog-post-backend.vercel.app/api/v1/blogPosts/${params.postId}`
   );
 
   return {

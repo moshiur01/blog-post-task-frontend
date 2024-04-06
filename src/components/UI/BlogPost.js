@@ -22,7 +22,7 @@ const BlogPost = () => {
   const fetchCategoryData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/categories"
+        "https://blog-post-backend.vercel.app/api/v1/categories"
       );
       setCategoryData(response?.data?.data);
     } catch (error) {
@@ -32,7 +32,9 @@ const BlogPost = () => {
 
   const fetchAuthorData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/users");
+      const response = await axios.get(
+        "https://blog-post-backend.vercel.app/api/v1/users"
+      );
       setAuthorData(response?.data?.data);
     } catch (error) {
       console.error("Error fetching authors:", error);
@@ -42,7 +44,7 @@ const BlogPost = () => {
   const fetchBlogPosts = async () => {
     try {
       setIsLoading(true);
-      let url = `http://localhost:5000/api/v1/blogPosts`;
+      let url = `https://blog-post-backend.vercel.app/api/v1/blogPosts`;
 
       if (selectedAuthor && selectedCategory) {
         url += `?userId=${selectedAuthor}&categoryId=${selectedCategory}`;

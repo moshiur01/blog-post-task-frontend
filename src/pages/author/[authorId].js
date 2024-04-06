@@ -27,7 +27,7 @@ BlogPostByCategory.getLayout = function getLayout(page) {
 export const getServerSideProps = async (context) => {
   const { params } = context;
   const res = await fetch(
-    `http://localhost:5000/api/v1/blogPosts?userId=${params.authorId}`
+    `https://blog-post-backend.vercel.app/api/v1/blogPosts?userId=${params.authorId}`
   );
   const data = await res.json();
 

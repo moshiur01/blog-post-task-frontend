@@ -16,7 +16,9 @@ const Navbar = ({ authors }) => {
 
   const fetchCategoryData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/categories");
+      const response = await fetch(
+        "https://blog-post-backend.vercel.app/api/v1/categories"
+      );
 
       const data = await response.json();
       setCategoryData(data?.data);
@@ -27,7 +29,9 @@ const Navbar = ({ authors }) => {
 
   const fetchAuthorData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/users");
+      const response = await fetch(
+        "https://blog-post-backend.vercel.app/api/v1/users"
+      );
 
       const data = await response.json();
       setAuthorData(data?.data);
