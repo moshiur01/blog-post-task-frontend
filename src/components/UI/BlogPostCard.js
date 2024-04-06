@@ -26,6 +26,7 @@ const BlogPostCard = ({ blogPosts, isLoading }) => {
               <h2 className="card-title text-lg font-semibold mb-2">
                 {post?.title}
               </h2>
+              <div className="badge badge-outline"> {post?.user?.name}</div>
               <hr className="w-full h-2 bg-black border-0 mb-4" />
               <div className="flex justify-between gap-4">
                 <div className="flex items-center gap-2 text-sm">
