@@ -1,14 +1,18 @@
+import auth from "@/firebase/firebaase.auth";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = ({ authors }) => {
   const [categoryData, setCategoryData] = useState([]);
   const [authorData, setAuthorData] = useState([]);
 
-  // useEffect(() => {
-  //   fetchCategoryData();
-  //   fetchAuthorData();
-  // }, []);
+  //user data form firebase hook
+  const [user, loading, error] = useAuthState(auth);
+  const [signOut] = useSignOut(auth);
+
+  const userName = user?.email?.split("@")[0];
 
   const fetchCategoryData = async () => {
     try {
@@ -87,7 +91,9 @@ const Navbar = ({ authors }) => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Blog Post</a>
+        <Link href={"/"} className="btn btn-ghost text-xl">
+          Blog Post
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 z-10 lg:space-x-4">
@@ -119,9 +125,33 @@ const Navbar = ({ authors }) => {
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
+      {user?.email ? (
+        <>
+          <div className="navbar-end">
+            <p className="mr-3">{userName}</p>
+          </div>
+
+          <div>
+            <a
+              className="btn btn-sm"
+              onClick={async () => {
+                const success = await signOut();
+                if (success) {
+                  toast.success("Sign out successfully");
+                }
+              }}
+            >
+              Logout
+            </a>
+          </div>
+        </>
+      ) : (
+        <div className="navbar-end">
+          <Link href={"/login"}>Login</Link>
+        </div>
+      )}
+
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
