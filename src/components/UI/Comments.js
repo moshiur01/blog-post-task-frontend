@@ -144,25 +144,31 @@ const Comments = ({ comments, postId }) => {
         </div>
       )}
 
-      {activeTab === "postReview" && user?.email ? (
-        <form
-          className="space-y-4 flex flex-col w-64"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <textarea
-            onChange={(e) => setReviewBody(e.target.value)}
-            placeholder="Write your comment here..."
-            className="textarea textarea-bordered"
-            rows={3}
-            required
-            {...register("commentBody", { required: true })}
-          />
-          <button type="submit" className="btn  btn-outline btn-sm w-20">
-            Submit
-          </button>
-        </form>
-      ) : (
-        <p className="text-xl font-semibold">Please login to write a comment</p>
+      {activeTab === "postReview" && (
+        <div>
+          {user?.email ? (
+            <form
+              className="space-y-4 flex flex-col w-64"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <textarea
+                onChange={(e) => setReviewBody(e.target.value)}
+                placeholder="Write your comment here..."
+                className="textarea textarea-bordered"
+                rows={3}
+                required
+                {...register("commentBody", { required: true })}
+              />
+              <button type="submit" className="btn  btn-outline btn-sm w-20">
+                Submit
+              </button>
+            </form>
+          ) : (
+            <p className="text-xl font-semibold">
+              Please login to write a comment
+            </p>
+          )}
+        </div>
       )}
 
       <Toaster position="top-center" reverseOrder={false} />
