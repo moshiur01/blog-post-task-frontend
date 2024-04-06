@@ -98,22 +98,26 @@ const Comments = ({ comments, postId }) => {
         </div>
 
         {/* Post a comment */}
-        {user?.email && (
-          <div
-            className={`px-4 py-2 cursor-pointer font-semibold ${
-              activeTab === "postReview" ? "bg-gray-300" : ""
-            }`}
-            onClick={() => handleTabChange("postReview")}
-          >
-            Post a Comment
-          </div>
-        )}
+
+        <div
+          className={`px-4 py-2 cursor-pointer font-semibold ${
+            activeTab === "postReview" ? "bg-gray-300" : ""
+          }`}
+          onClick={() => handleTabChange("postReview")}
+        >
+          Post a Comment
+        </div>
       </div>
 
       {/* Tab content */}
       {activeTab === "reviews" && (
         <div className="space-y-4">
-          <p className="text-2xl font-bold">Comments</p>
+          <p className="text-2xl font-bold">
+            {" "}
+            {comments?.length > 0
+              ? "Comments"
+              : "There is no Comments in the post"}
+          </p>
           {comments?.map((comment, index) => (
             <div key={index} className="bg-white shadow-md p-4 rounded-md">
               <p className="text-gray-600 font-semibold flex items-center gap-3">
@@ -140,13 +144,12 @@ const Comments = ({ comments, postId }) => {
         </div>
       )}
 
-      {activeTab === "postReview" && (
+      {activeTab === "postReview" && user?.email ? (
         <form
           className="space-y-4 flex flex-col w-64"
           onSubmit={handleSubmit(onSubmit)}
         >
           <textarea
-            // value={reviewBody}
             onChange={(e) => setReviewBody(e.target.value)}
             placeholder="Write your comment here..."
             className="textarea textarea-bordered"
@@ -158,6 +161,8 @@ const Comments = ({ comments, postId }) => {
             Submit
           </button>
         </form>
+      ) : (
+        <p className="text-xl font-semibold">Please login to write a comment</p>
       )}
 
       <Toaster position="top-center" reverseOrder={false} />
